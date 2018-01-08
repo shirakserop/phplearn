@@ -1,13 +1,9 @@
 <?php require_once('../../../private/initialize.php') ?>
   <?php $page_title = 'Pages' ?>
 <?php  include(SHARED_PATH . '/staff_header.php')?>
-<?php $pages = [
-  ['id'=> '1', 'category' => 'gallery', 'page_name'=>'Globe Bank'],
-  ['id'=> '2', 'category' => 'posts', 'page_name'=>'History'],
-  ['id'=> '3', 'category' => 'videos', 'page_name'=>'Leadership'],
-  ['id'=> '4', 'category' => 'voice', 'page_name'=>'Contact Us'],
-
-]; ?>
+  <?php
+    $page_set = find_all_pages();
+   ?>
   <div id="content">
     <div class="pages listing">
       <h1>Pages</h1>
@@ -15,23 +11,32 @@
         <a class="action" href=" <?php echo url_for('/staff/pages/new.php') ?>">Create New Page</a>
       <table class="list">
         <tr>
-          <th>Page</th>
+          <th>id</th>
+          <th>subject_id</th>
+          <th>page_name</th>
+          <th>position</th>
+          <th>visible</th>
           <th>&nbsp;</th>
           <th>&nbsp;</th>
           <th>&nbsp;</th>
         </tr>
-        <?php foreach($pages as $page):?>
+        <?php while($page = mysqli_fetch_assoc($page_set)){?>
           <tr>
-            <td><?php echo $page['page_name']; ?></td>
+            <td><?php echo h($page['id']); ?></td>
+            <td><?php echo h($page['subject_id']); ?></td>
+            <td><?php echo h($page['page_name']); ?></td>
+            <td><?php echo h($page['position']); ?></td>
+            <td><?php echo $page['visible'] == 1 ? 'true' : 'false'; ?></td>
             <td><a class="action" href="<?php echo
-            url_for('/staff/pages/show.php?id=' . h(u($page['id'])) .
-            '&category=' . h(u($page['category'])) .'&name=' . h(u($page['page_name'])) );
+            url_for('/staff/pages/show.php?id=' . h(u($page['id'])));
             ?> ">View</a></td>
             <td><a class="action" href=<?php echo url_for('/staff/pages/edit.php?id=' . h(u($page['id']))) ;?> >Edit</a></td>
             <td><a class="action" href="">Delete</a></td>
           </tr>
-        <?php endforeach; ?>
+        <?php } ?>
         </table>
+
+        <?php mysqli_free_result($page_set); ?>
       </div>
     </div>
   </div>

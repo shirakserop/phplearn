@@ -42,6 +42,7 @@
         </tr>
       <?php } ?>
     </table>
+    <?php mysqli_free_result($page_set); ?>
   </div>
 </div>
 
