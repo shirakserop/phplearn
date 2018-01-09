@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 08, 2018 at 04:32 PM
+-- Generation Time: Jan 09, 2018 at 01:48 PM
 -- Server version: 5.6.35
 -- PHP Version: 7.1.8
 
@@ -63,11 +63,15 @@ CREATE TABLE `subjects` (
 --
 
 INSERT INTO `subjects` (`id`, `menu_name`, `position`, `visible`) VALUES
-(1, 'About Globale Bank', 1, 0),
+(1, 'About Globe Bank', 1, 1),
 (2, 'Consumer', 2, 1),
 (3, 'Small Business', 2, 1),
 (4, 'Commecial', 3, 1),
-(5, 'Wordpress', 4, 0);
+(5, 'PhpBB 5 Forums', 1, 1),
+(6, 'Non-commercial 1@£$', 1, 0),
+(7, 'subject not delete ', 1, 0),
+(8, 'Object has been edited ', 1, 0),
+(9, 'no-commercial ', 1, 0);
 
 --
 -- Indexes for dumped tables
@@ -99,4 +103,4 @@ ALTER TABLE `page`
 -- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;

@@ -1,14 +1,5 @@
 <?php require_once('../../../private/initialize.php');
-  $test = $_GET['test'] ? $_GET['test']:'';
-  if($test == '404'){
-    error_404();
-  }elseif($test == '500'){
-    error_500();
-  }elseif($test == 'redirect'){
-    redirect_to('/staff/subjects/index.php');
-    echo 'No error';
-    exit;
-  }
+
 ?>
 <?php $page_title = 'Subjects'; ?>
 <?php include(SHARED_PATH . '/staff_header.php'); ?>
