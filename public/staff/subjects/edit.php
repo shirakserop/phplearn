@@ -20,8 +20,11 @@ if(is_post_request()){    // it checks if there is a post request , if not it wi
   redirect_to('/staff/subjects/show.php?id=' . $subject['id'] );
  }else{
    $subject = find_subject_by_id($id); //returns an associated array with all the subjects
+   $subject_set = find_all_subjects(); //selects all subjects in the Sql table
+   $subject_count= mysqli_num_rows($subject_set); // returns the number of rows (subjects) in the subject table
+   mysqli_free_result($subject_set); //free the results that have been set in subject_set variable
  }
- 
+
 ?>
 <?php $page_title = 'Subjects'; ?>
 <?php include(SHARED_PATH . '/staff_header.php'); ?>
@@ -40,7 +43,14 @@ if(is_post_request()){    // it checks if there is a post request , if not it wi
           <dt>Position</dt>
           <dd>
             <select name="position">
-              <option value="1" <?php if($subject['position'] == "1"){ echo "selected";} ?> >1</option>
+              <?php for($i=1; $i <= $subject_count; $i++){
+                echo "<option value=\"{$i}\"";
+                  if($subject['possition'] == $i){
+                    echo " selected";
+                  }
+                echo ">{$i}</option>";
+              }
+                ?>
             </select>
           </dd>
       </dl>

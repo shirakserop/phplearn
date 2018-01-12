@@ -1,20 +1,32 @@
 <?php require_once('../../../private/initialize.php');?>
 <?php
-    $page_name = '';
-    $visibility = '';
-    $category = '';
+if(is_post_request()) {
 
-    $page_title= 'Pages';
-    if(is_post_request()){
-      $page_name = $_POST['page_name'] ? $_POST['page_name']: '';
-      $category = $_POST['category'] ? $_POST['category']: '';
-      $visibility = $_POST['visibility'] ? $_POST['visibility']: '';
+  $page = [];
+  $page['subject_id'] = $_POST['subject_id'] ?? '';
+  $page['page_name'] = $_POST['menu_name'] ?? '';
+  $page['position'] = $_POST['position'] ?? '';
+  $page['visible'] = $_POST['visible'] ?? '';
+  $page['content'] = $_POST['content'] ?? '';
 
-      echo 'Creating Page Form <br />';
-      echo 'Page Name: ' . $page_name . '<br />';
-      echo 'Category: ' . $category . '<br />';
-      echo 'Visibility: ' . $visibility . '<br />';
-    }
+  $result = insert_page($page);
+  $new_id = mysqli_insert_id($db);
+  redirect_to(url_for('/staff/pages/show.php?id=' . $new_id));
+
+} else {
+
+  $page = [];
+  $page['subject_id'] = '';
+  $page['menu_name'] = '';
+  $page['position'] = '';
+  $page['visible'] = '';
+  $page['content'] = '';
+
+  $page_set = find_all_pages();
+  $page_count = mysqli_num_rows($page_set) + 1; // because we add new page
+  mysqli_free_result($page_set);
+
+}
   ?>
 
 <?php include(SHARED_PATH . '/staff_header.php'); ?>
@@ -25,28 +37,61 @@
     <h1>Create Page</h1>
     <form action="<?php echo url_for('/staff/pages/new.php'); ?>" method="post">
       <dl>
-        <dt>Page Name</dt>
-        <dd>  <input type="text" name="page_name" value="<?php h($page_name); ?> " /></dd>
-      </dl>
-      <dl>
-        <dt>Category</dt>
+        <dt>Subject</dt>
         <dd>
-          <select name="category">
-            <option value="1" <?php if($category == "1"){echo "selected"; }?> >1</option>
+          <select name="subject_id">
+          <?php
+            $subject_set = find_all_subjects();
+            while($subject = mysqli_fetch_assoc($subject_set)) {
+              echo "<option value=\"" . h($subject['id']) . "\"";
+              if($page["subject_id"] == $subject['id']) {
+                echo " selected";
+              }
+              echo ">" . h($subject['menu_name']) . "</option>";
+            }
+            mysqli_free_result($subject_set);
+          ?>
           </select>
         </dd>
       </dl>
       <dl>
-        <dt>Visiblility</dt>
+        <dt>Menu Name</dt>
+        <dd><input type="text" name="menu_name" value="<?php echo h($page['page_name']); ?>" /></dd>
+      </dl>
+      <dl>
+        <dt>Position</dt>
         <dd>
-          <input type="hidden" name="visibility" value="0" />
-          <input type="checkbox" name="visibility" value="1"<?php if($visibility == "1"){echo "checked";} ?> />
+          <select name="position">
+            <?php
+              for($i=1; $i <= $page_count; $i++) {
+                echo "<option value=\"{$i}\"";
+                if($page["position"] == $i) {
+                  echo " selected";
+                }
+                echo ">{$i}</option>";
+              }
+            ?>
+          </select>
+        </dd>
+      </dl>
+      <dl>
+        <dt>Visible</dt>
+        <dd>
+          <input type="hidden" name="visible" value="0" />
+          <input type="checkbox" name="visible" value="1"<?php if($page['subject_id'] == "1") { echo " checked"; } ?> />
+        </dd>
+      </dl>
+      <dl>
+        <dt>Content</dt>
+        <dd>
+          <textarea name="content" cols="60" rows="10"><?php echo h($page['content']); ?></textarea>
         </dd>
       </dl>
       <div id="operations">
-        <input type="submit"  value="Create Page" />
+        <input type="submit" value="Create Page" />
       </div>
     </form>
+
   </div>
 
 </div>

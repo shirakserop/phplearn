@@ -1,9 +1,10 @@
 <?php require_once('../../../private/initialize.php'); ?>
 <?php
   $id = $_GET['id'] ?? '1';
-  $page = $_GET['name'] ?? '1';
-  $category = $_GET['category'] ?? '1';
+  $page = find_page_by_id($id);
  ?>
+
+ <?php $page_title = 'Show Page'; ?>
 <?php include(SHARED_PATH . '/staff_header.php');?>
 
 <div id="content">
@@ -13,14 +14,19 @@
 ?>">&laquo; Back</a>
 <table class="list">
   <tr>
-    <th>Page</th>
-    <th>id</th>
-    <th>category</th>
+    <th>Subject</th>
+    <th>Page name</th>
+    <th>Position</th>
+    <th>Visible</th>
+    <th>Content</th>
   </tr>
   <tr>
-    <td><h3> <?php echo h($page);?> </h3></td>
-    <td><h3> <?php echo h($id);?> </h3></td>
-    <td><h3> <?php echo h($category);?> </h3></td>
+    <?php $subject = find_subject_by_id($page['subject_id']); ?>
+    <td><h3> <?php echo h($subject['menu_name']);?> </h3></td>
+    <td><h3> <?php echo h($page['page_name']);?> </h3></td>
+    <td><h3> <?php echo h($page['position']);?> </h3></td>
+    <td><h3> <?php echo   $page['visible'] == '1' ? 'true' : 'false';?> </h3></td>
+    <td><h3> <?php echo h($page['content']);?> </h3></td>
   </tr>
 </table>
 </div>
