@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 09, 2018 at 01:48 PM
+-- Generation Time: Jan 12, 2018 at 02:01 PM
 -- Server version: 5.6.35
 -- PHP Version: 7.1.8
 
@@ -34,13 +34,11 @@ CREATE TABLE `page` (
 --
 
 INSERT INTO `page` (`id`, `subject_id`, `page_name`, `position`, `visible`, `content`) VALUES
-(1, 1, 'Globe Bank', 1, 1, NULL),
-(2, 1, 'History', 2, 1, NULL),
+(2, 15, 'History', 2, 1, ''),
 (3, 1, 'Leadership', 3, 1, NULL),
 (4, 1, 'Contact Us ', 4, 1, NULL),
 (5, 2, 'Banking', 1, 1, NULL),
-(6, 2, 'Credit Cards', 2, 1, NULL),
-(7, 2, 'mortgages', 3, 1, NULL),
+(6, 15, 'Credit Cards', 2, 1, ''),
 (8, 3, 'Checking', 1, 1, NULL),
 (9, 3, 'Loans', 2, 1, NULL),
 (10, 3, 'Merchant Service', 3, 1, NULL);
@@ -63,15 +61,10 @@ CREATE TABLE `subjects` (
 --
 
 INSERT INTO `subjects` (`id`, `menu_name`, `position`, `visible`) VALUES
-(1, 'About Globe Bank', 1, 1),
-(2, 'Consumer', 2, 1),
-(3, 'Small Business', 2, 1),
-(4, 'Commecial', 3, 1),
-(5, 'PhpBB 5 Forums', 1, 1),
-(6, 'Non-commercial 1@£$', 1, 0),
-(7, 'subject not delete ', 1, 0),
-(8, 'Object has been edited ', 1, 0),
-(9, 'no-commercial ', 1, 0);
+(15, 'second one ', 2, 0),
+(16, 'third one ', 3, 0),
+(17, 'full', 4, 0),
+(18, 'dont panic ', 5, 1);
 
 --
 -- Indexes for dumped tables
@@ -103,4 +96,4 @@ ALTER TABLE `page`
 -- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
